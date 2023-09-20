@@ -22,6 +22,7 @@ class Program
 
         int total = 0;
         
+        
         foreach (int number in numbers)
         {
             total += number;
