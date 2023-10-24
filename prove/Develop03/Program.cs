@@ -1,9 +1,26 @@
-using System;
-
 class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Develop03 World!");
+        Console.Clear();
+        Reference nref = new Reference("Alma", "15", "17");
+        nref.Display();
+        Scripture nscrip = new Scripture("Now ye may suppose that this is afoolishness in me; but behold I say unto you, that by bsmall and simple things are great things brought to pass; and small means in many instances doth confound the wise.");
+        nscrip.Display();
+
+        while (true)
+        {
+            Console.WriteLine("\nType any key ('Q' to exit)");
+            ConsoleKeyInfo keyInfo = Console.ReadKey();
+            nscrip.HideRandomWord();
+            Console.Clear();
+            nref.Display();
+            nscrip.Display();
+
+            if (nscrip.AllWordsHidden()|| keyInfo.Key == ConsoleKey.Q)
+            {
+                break;
+            }
+        }
     }
 }

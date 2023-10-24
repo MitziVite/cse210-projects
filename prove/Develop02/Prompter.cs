@@ -13,9 +13,7 @@ public class Prompter
         "What was the strongest emotion I felt today?",
         "If I had one thing I could do over today, what would it be?"
     };
-    private List<string> _answers = new List<string>();
-
-    // public List<Entry> _jobs = new List<Entry>();    
+    private List<string> _answers = new List<string>();  
 
     public void randomOption()
     {
@@ -50,7 +48,7 @@ public class Prompter
         }
     }
 
-        Console.WriteLine($"Las respuestas se han guardado en {fileName}");
+        Console.WriteLine($"The answers are in {fileName}");
     }
 
 
