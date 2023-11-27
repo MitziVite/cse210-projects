@@ -1,0 +1,16 @@
+Goal Name: 1
+Goal Description: hollla
+
+Goal Name: 
+Goal Description: esta es una descripcion
+0
+Goal Name: 
+Goal Description: un pato
+0
+Goal Name: 
+Goal Description: una descripcion mas
+1000
+Goal Name: una patata
+Goal Description: mas descripciones
+600
+ una meta mas, massss descripcion, 200
