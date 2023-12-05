@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-public class BaseGoal
+public abstract class BaseGoal
 {
     protected string goalName;
     protected string goalDescription;
@@ -62,76 +62,33 @@ public class BaseGoal
         Console.WriteLine($"Text saved in {fileName}");
     }
 
-    // public virtual void Load()
-    // {
-    //     Console.Write("What is the name of the file you want to load:  ");
-    //     string readFile = Console.ReadLine();
-    //     string fileName = readFile + ".txt";
-
-    //     if (File.Exists(fileName))
-    //     {
-    //         string[] lines = File.ReadAllLines(fileName);
-
-    //         foreach (string line in lines)
-    //         {
-    //             string[] parts = line.Split(',');
-
-    //             if (parts.Length == 4)
-    //             {
-    //                 goalName = parts[1].Trim();
-    //                 goalDescription = parts[2].Trim();
-
-    //                 if (int.TryParse(parts[3].Trim(), out int points))
-    //                 {
-    //                     totalPoints = points;
-    //                 }
-    //                 else
-    //                 {
-    //                     Console.WriteLine("Error parsing totalPoints.");
-    //                 }
-    //             }
-    //             else
-    //             {
-    //                 Console.WriteLine("Error reading line: " + line);
-    //             }
-    //         }
-
-    //         Console.WriteLine("File loaded successfully.");
-    //     }
-    //     else
-    //     {
-    //         Console.WriteLine("File not found.");
-    //     }
-    // }
-
     public virtual string Load()
-{
-    Console.WriteLine("What is the filename for the goal file?");
-    string fileName = Console.ReadLine();
-
-    if (!fileName.EndsWith(".txt"))
     {
-        fileName += ".txt";
-    }
+        Console.WriteLine("What is the filename for the goal file?");
+        string fileName = Console.ReadLine();
 
-    if (File.Exists(fileName))
-    {
-        StringBuilder result = new StringBuilder();
-        string[] lines = File.ReadAllLines(fileName);
-
-        foreach (string line in lines)
+        if (!fileName.EndsWith(".txt"))
         {
-            result.AppendLine(line);
+            fileName += ".txt";
         }
 
-        return result.ToString();
-    }
-    else
-    {
-        return "File not found.";
-    }
-}
+        if (File.Exists(fileName))
+        {
+            StringBuilder result = new StringBuilder();
+            string[] lines = File.ReadAllLines(fileName);
 
+            foreach (string line in lines)
+            {
+                result.AppendLine(line);
+            }
+
+            return result.ToString();
+        }
+        else
+        {
+            return "File not found.";
+        }
+    }
 
     public virtual void DisplayTotalPoints()
     {
@@ -173,13 +130,18 @@ public class BaseGoal
         return "BaseGoal";
     }
 
-    public virtual string GetTotalPoints(){
+    public virtual string GetTotalPoints()
+    {
         return totalPoints.ToString();
     }
 
     public virtual string SaveGoalInfo()
-{
-    return $"{GetType().Name}: {goalName}, {goalDescription}, {totalPoints}, {IsCompleted()}";
-}
+    {
+        return $"{GetType().Name}: {goalName}, {goalDescription}, { GetTimesCompleted()}, {GetTimesToAccomplish()}";
+    }
+
+    public abstract string GetAdditionalInfo();
+    
+
 
 }

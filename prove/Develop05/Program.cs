@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-class Program
+public partial class Program
 {
     static void Main(string[] args)
     {
         bool continueRunning = true;
         List<BaseGoal> goals = new List<BaseGoal>();
-        string userFileName = null;  // Variable para almacenar el nombre del archivo
+        string userFileName = null; 
 
         while (continueRunning)
         {
@@ -27,7 +27,7 @@ class Program
                     ListGoals(goals);
                     break;
                 case "3":
-                    SaveGoalsCustomFormat(goals, userFileName);  // Utiliza el nombre de archivo almacenado previamente
+                    SaveGoalsCustomFormat(goals, userFileName); 
                     break;
                 case "4":
                     Console.WriteLine("Loading goals...");
@@ -119,37 +119,36 @@ class Program
         foreach (BaseGoal goal in goals)
         {
             string status = goal.IsCompleted() ? "[X]" : "[ ]";
-            string displayText = $"{status} {goal.GetGoalName()} ({goal.GetGoalDescription()}). -- Currently completed {goal.GetTimesCompleted()}/{goal.GetTimesToAccomplish()}";
-            Console.WriteLine(displayText);
+            // string displayText = $"{status} {goal.GetGoalName()} ({goal.GetGoalDescription()}) -- Currently completed {goal.GetTimesCompleted()}/{goal.GetTimesToAccomplish()}";
+         
+            Console.WriteLine(goal.GetAdditionalInfo());
         }
     }
 
     static void SaveGoalsCustomFormat(List<BaseGoal> goals, string fileName)
-{
-    // Pregunta por el nombre del archivo si no se proporcionó
-    fileName ??= GetFileNameFromUser();
-
-    using (StreamWriter writer = new StreamWriter(fileName, true))
     {
-        foreach (BaseGoal goal in goals)
+
+        fileName ??= GetFileNameFromUser();
+
+        using (StreamWriter writer = new StreamWriter(fileName, true))
         {
-            string saveText = goal.SaveGoalInfo();
-            writer.WriteLine(saveText);
+            foreach (BaseGoal goal in goals)
+            {
+                string saveText = goal.SaveGoalInfo();
+                writer.WriteLine(saveText);
+            }
         }
+
+        Console.WriteLine($"Goals saved in {fileName}");
     }
 
-    Console.WriteLine($"Goals saved in {fileName}");
-}
-
     static string GetFileNameFromUser()
-{
-    Console.WriteLine("What is the filename for the goal file?");
-    string userFileName = Console.ReadLine();
+    {
+        Console.WriteLine("What is the filename for the goal file?");
+        string userFileName = Console.ReadLine();
 
-    // Asegúrate de que el nombre de archivo tenga la extensión .txt
-    return Path.ChangeExtension(userFileName, ".txt");
-}
- 
+        return Path.ChangeExtension(userFileName, ".txt");
+    }
 
     static void RecordEvent(List<BaseGoal> goals)
     {
@@ -168,7 +167,7 @@ class Program
 
         BaseGoal selectedGoal = goals[selectedIndex - 1];
 
-        // Verifica el tipo específico del objetivo antes de llamar a RecordEvent
+
         if (selectedGoal is BasicGoal basicGoal)
         {
             basicGoal.RecordEvent();
@@ -190,34 +189,51 @@ class Program
     }
 
     static string LoadGoalsCustomFormat()
-{
-    // You can customize the filename or ask the user for it
-    Console.WriteLine("What is the filename for the goal file?");
-    string fileName = Console.ReadLine();
-
-    if (!fileName.EndsWith(".txt"))
     {
-        fileName += ".txt";
-    }
+       
+        Console.WriteLine("What is the filename for the goal file?");
+        string fileName = Console.ReadLine();
 
-    if (File.Exists(fileName))
-    {
-        StringBuilder result = new StringBuilder();
-        string[] lines = File.ReadAllLines(fileName);
-
-        foreach (string line in lines)
+        if (!fileName.EndsWith(".txt"))
         {
-            result.AppendLine(line);
+            fileName += ".txt";
         }
 
-        return result.ToString();
+        if (File.Exists(fileName))
+        {
+            StringBuilder result = new StringBuilder();
+            string[] lines = File.ReadAllLines(fileName);
+
+            foreach (string line in lines)
+            {
+                result.AppendLine(line);
+            }
+
+            return result.ToString();
+        }
+        else
+        {
+            return "File not found.";
+        }
     }
-    else
+    static void DisplayScore(List<BaseGoal> goals)
+{
+    int totalScore = 0;
+
+    foreach (BaseGoal goal in goals)
     {
-        return "File not found.";
+      
+        if (int.TryParse(goal.GetTotalPoints(), out int goalScore))
+        {
+            totalScore += goalScore;
+        }
+        else
+        {
+            Console.WriteLine($"Error: Unable to convert goal score '{goal.GetTotalPoints()}' to an integer.");
+        }
     }
+
+    Console.WriteLine($"Total Score: {totalScore}");
 }
 
 }
-
-// Resto del código de las clases BaseGoal, BasicGoal, EternalGoal, Checklist

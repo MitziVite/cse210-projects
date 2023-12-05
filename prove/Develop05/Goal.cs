@@ -46,33 +46,33 @@ public class Goal
                     Console.WriteLine("Invalid choice. Please select a valid option.");
                     break;
             }
-
-
-            // switch (choice)
-            // {
-            //     case "1":
-            //         BasicGoal goal = new BasicGoal();
-            //         goal.Name();
-            //         goal.SumPoints();
-            //         goal.Save();
-            //         goals.Add(goal);
-            //         break;
-            //     // Implementar casos para otros tipos de metas si es necesario
-            //     default:
-            //         Console.WriteLine("Invalid choice. Please select a valid option.");
-            //         break;
-            // }
         }
     }
 
-    public void ListGoals()
+    static void ListGoals(List<BaseGoal> goals)
     {
         Console.WriteLine("List of Goals:");
 
         foreach (BaseGoal goal in goals)
         {
             string status = goal.IsCompleted() ? "[X]" : "[ ]";
-            string displayText = $"{status} {goal.GetGoalName()} ({goal.GetGoalDescription()}). -- Currently completed {goal.GetTimesCompleted()}/{goal.GetTimesToAccomplish()}";
+            string displayText = $"{status} {goal.GetGoalName()} ({goal.GetGoalDescription()})";
+
+
+            if (goal is BasicGoal basicGoal)
+            {
+             
+            }
+            else if (goal is EternalGoal eternalGoal)
+            {
+               
+            }
+            else if (goal is Checklist checklistGoal)
+            {
+                
+                displayText += $"{checklistGoal.GetAdditionalInfo()}";
+            }
+
             Console.WriteLine(displayText);
         }
     }

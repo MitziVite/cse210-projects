@@ -4,7 +4,9 @@ public class EternalGoal : BaseGoal
 {
     public override void RecordEvent()
     {
-        Console.WriteLine("Event recorded for the Eternal Goal.");
+        Console.WriteLine($"Event recorded for the Eternal Goal: {GetGoalName()}");
+
+        totalPoints += 100; 
     }
 
     public override string GetGoalName()
@@ -14,11 +16,17 @@ public class EternalGoal : BaseGoal
 
     public override bool IsCompleted()
     {
-        return false; // EternalGoal siempre se considera completado
+        return false; 
     }
 
     public override string SaveGoalInfo()
     {
         return $"Eternal Goal: {goalName}, {goalDescription}, {totalPoints}";
+    }
+
+    public override string GetAdditionalInfo()
+    {
+    
+        return  $"[E] {goalName} ({goalDescription})";
     }
 }
