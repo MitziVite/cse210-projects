@@ -1,0 +1,2 @@
+Basic Goal: fix program, fixing bugs, 2000, True
+Eternal Goal: work on stuff, doing stuff, 210
