@@ -4,8 +4,8 @@ public class EternalGoal : BaseGoal
 {
     public override void RecordEvent()
     {
-          Console.WriteLine($"Event recorded for the Eternal Goal: {GetGoalName()}");
-    Program.UpdateTotalScore(totalPoints);
+        Console.WriteLine($"Event recorded for the Eternal Goal: {GetGoalName()}");
+        Program.UpdateTotalScore(totalPoints);
     }
     public override string GetGoalName()
     {
