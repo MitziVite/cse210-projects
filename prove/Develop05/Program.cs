@@ -5,15 +5,17 @@ using System.Text;
 
 public partial class Program
 {
+    static int totalScore = 0; 
     static void Main(string[] args)
     {
         bool continueRunning = true;
         List<BaseGoal> goals = new List<BaseGoal>();
         string userFileName = null; 
 
+
         while (continueRunning)
         {
-            DisplayMenu(goals);
+            DisplayMenu();
 
             string choice = Console.ReadLine();
 
@@ -35,6 +37,7 @@ public partial class Program
                     break;
                 case "5":
                     RecordEvent(goals);
+                    DisplayScore(goals);
                     break;
                 case "6":
                     continueRunning = false;
@@ -46,9 +49,9 @@ public partial class Program
         }
     }
 
-    static void DisplayMenu(List<BaseGoal> goals)
+    static void DisplayMenu()
     {
-        DisplayScore(goals);
+        Console.WriteLine($"Total Score: {totalScore}");
         Console.WriteLine("Menu Options:");
         Console.WriteLine("1. Create new Goal");
         Console.WriteLine("2. List Goals");
@@ -151,7 +154,7 @@ public partial class Program
         return Path.ChangeExtension(userFileName, ".txt");
     }
 
-    static void RecordEvent(List<BaseGoal> goals)
+     static void RecordEvent(List<BaseGoal> goals)
     {
         Console.WriteLine("Select the goal you want to record an event for:");
 
@@ -168,18 +171,44 @@ public partial class Program
 
         BaseGoal selectedGoal = goals[selectedIndex - 1];
 
-
         if (selectedGoal is BasicGoal basicGoal)
         {
             basicGoal.RecordEvent();
+            int points;
+            if (int.TryParse(basicGoal.GetTotalPoints(), out points))
+            {
+                totalScore += points;
+            }
+            else
+            {
+                Console.WriteLine($"Error: Unable to convert goal score '{basicGoal.GetTotalPoints()}' to an integer.");
+            }
         }
         else if (selectedGoal is EternalGoal eternalGoal)
         {
             eternalGoal.RecordEvent();
+            int points;
+            if (int.TryParse(eternalGoal.GetTotalPoints(), out points))
+            {
+                totalScore += points;
+            }
+            else
+            {
+                Console.WriteLine($"Error: Unable to convert goal score '{eternalGoal.GetTotalPoints()}' to an integer.");
+            }
         }
         else if (selectedGoal is Checklist checklistGoal)
         {
             checklistGoal.RecordEvent();
+            int points;
+            if (int.TryParse(checklistGoal.GetTotalPoints(), out points))
+            {
+                totalScore += points;
+            }
+            else
+            {
+                Console.WriteLine($"Error: Unable to convert goal score '{checklistGoal.GetTotalPoints()}' to an integer.");
+            }
         }
         else
         {
@@ -217,19 +246,36 @@ public partial class Program
             return "File not found.";
         }
     }
-    
-    static void DisplayScore(List<BaseGoal> goals)
-{
-    int totalScore = 0;
 
-    foreach (BaseGoal goal in goals)
+
+    static void DisplayScore(List<BaseGoal> goals)
     {
-        if (goal.IsCompleted() && int.TryParse(goal.GetTotalPoints(), out int goalScore))
+        totalScore = 0;
+
+        foreach (BaseGoal goal in goals)
         {
-            totalScore += goalScore;
+            if (int.TryParse(goal.GetTotalPoints(), out int goalScore))
+            {
+                totalScore += goalScore;
+            }
+            else
+            {
+                Console.WriteLine($"Error: Unable to convert goal score '{goal.GetTotalPoints()}' to an integer.");
+            }
         }
+
+        DisplayMenu();
+        Console.WriteLine($"Total Score: {totalScore}");
+    }
+    public static void UpdateTotalScore(int points)
+    {
+        totalScore += points;
     }
 
-    Console.WriteLine($"Total Score: {totalScore}");
-}
+    public static int GetTotalScore()
+    {
+        return totalScore;
+    }
+
+
 }

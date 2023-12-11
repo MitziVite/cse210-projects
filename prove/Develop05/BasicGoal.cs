@@ -2,20 +2,22 @@ using System;
 
 public class BasicGoal : BaseGoal
 {
+    int totalScore;
     private bool isCompleted = false;
      public override bool IsCompleted()
     {
         return isCompleted;
     }
 
-    public override void RecordEvent()
+     public override void RecordEvent()
     {
         Console.WriteLine($"Event recorded for the Basic Goal: {GetGoalName()}");
 
         if (!isCompleted)
         {
             isCompleted = true;
-            totalPoints += 1000; 
+            // Incrementar totalScore en lugar de totalPoints
+            totalScore += totalPoints; 
         }
     }
 

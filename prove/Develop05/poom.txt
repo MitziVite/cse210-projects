@@ -1,4 +1,0 @@
-Basic Goal: una manana, manana, 1012, True
-Eternal Goal: kdfj, skfdj, 32
-Checklist Goal: boom boom, i want, 40, 2, 20, 0
-Checklist Goal: this night, boom boom, 60, 500, 2, 0

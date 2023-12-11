@@ -1,3 +1,0 @@
-Basic Goal: uno, primero, 12, False
-Eternal Goal: dos, segundo, 20
-Checklist Goal: tre, tercero, 40, 60, 3, 0

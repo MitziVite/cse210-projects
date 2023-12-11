@@ -5,7 +5,7 @@ public class Checklist : BaseGoal
     private int timesCompleted = 0;
     private int timesToAccomplish = 10;
 
-    private string bonusPoints;
+    private int bonusPoints;
 
     public void TimesToAccomplish()
     {
@@ -24,23 +24,28 @@ public class Checklist : BaseGoal
 
     public void BonusPoints()
     {
-        Console.WriteLine("What is the bonus for accomplishing it that many times? ");
-        bonusPoints = Console.ReadLine();
+       Console.WriteLine("What is the bonus for accomplishing it that many times? ");
+        if (int.TryParse(Console.ReadLine(), out int inputBonusPoints))
+        {
+            bonusPoints = inputBonusPoints;
+        }
+        else
+        {
+            Console.WriteLine("Invalid input. Using the default value.");
+        }
     }
 
      public override void RecordEvent()
     {
         Console.WriteLine($"Event recorded for the Checklist Goal: {GetGoalName()}");
-
-    
-        totalPoints += 50; 
-
- 
         timesCompleted++;
-        if (IsCompleted())
+
+        if (timesCompleted == timesToAccomplish)
         {
-            totalPoints += 500;
+            totalPoints += totalPoints+ bonusPoints;
         }
+
+        Program.UpdateTotalScore(totalPoints);
     }
     public override bool IsCompleted()
     {
