@@ -13,7 +13,7 @@ public partial class Program
 
         while (continueRunning)
         {
-            DisplayMenu();
+            DisplayMenu(goals);
 
             string choice = Console.ReadLine();
 
@@ -46,8 +46,9 @@ public partial class Program
         }
     }
 
-    static void DisplayMenu()
+    static void DisplayMenu(List<BaseGoal> goals)
     {
+        DisplayScore(goals);
         Console.WriteLine("Menu Options:");
         Console.WriteLine("1. Create new Goal");
         Console.WriteLine("2. List Goals");
@@ -216,24 +217,19 @@ public partial class Program
             return "File not found.";
         }
     }
+    
     static void DisplayScore(List<BaseGoal> goals)
 {
     int totalScore = 0;
 
     foreach (BaseGoal goal in goals)
     {
-      
-        if (int.TryParse(goal.GetTotalPoints(), out int goalScore))
+        if (goal.IsCompleted() && int.TryParse(goal.GetTotalPoints(), out int goalScore))
         {
             totalScore += goalScore;
-        }
-        else
-        {
-            Console.WriteLine($"Error: Unable to convert goal score '{goal.GetTotalPoints()}' to an integer.");
         }
     }
 
     Console.WriteLine($"Total Score: {totalScore}");
 }
-
 }
